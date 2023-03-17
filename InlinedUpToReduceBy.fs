@@ -35,11 +35,19 @@ let inline minBy ([<InlineIfLambda>] projection) (array: _[]) =
     |> reduceBy (fun x -> projection x, x) (fun a b -> if fst a < fst b then a else b)
     |> snd
 
+let structFst struct(a,b) = a
+let structSnd struct(a,b) = b
+
+let inline minByViaStruct ([<InlineIfLambda>] projection) (array: _[]) =
+    array 
+    |> reduceBy (fun x -> struct(projection x, x)) (fun a b -> if structFst a < structFst b then a else b)
+    |> structSnd
+
 let inline min (array: _[]) =
     array |> reduce (fun a b -> if a < b then a else b)
 
 let inline minViaMinBy (array: _[]) =
-    array |> minBy id
+    array |> minByViaStruct id
 
 
 let  minHandCrafted (array: _[]) =

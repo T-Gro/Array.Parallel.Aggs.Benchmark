@@ -45,7 +45,7 @@ type AggBenchMark()   =
     member this.NormalMin () = 
         Array.min (this.GetRecords())
 
-    [<Benchmark()>]
+    //[<Benchmark()>]
     member this.NormalMinBy () = 
         Array.minBy (fun x -> x.X) (this.GetRecords())
 
@@ -53,15 +53,23 @@ type AggBenchMark()   =
     member this.InlinedUpToReduceByMin () = 
         InlinedUpToReduceBy.min (this.GetRecords())
 
-    [<Benchmark()>]
+    //[<Benchmark()>]
     member this.InlinedUpToReduceByMinBy () = 
         InlinedUpToReduceBy.minBy (fun x -> x.X) (this.GetRecords())
+
+    //[<Benchmark()>]
+    member this.minByViaStruct () = 
+        InlinedUpToReduceBy.minByViaStruct (fun x -> x.X) (this.GetRecords())
+
+    [<Benchmark()>]
+    member this.fullyInlinedViaStruct () = 
+        FullyInlined.minByViaStruct (fun x -> x.X) (this.GetRecords())
 
     [<Benchmark()>]
     member this.minViaMinBy () = 
         InlinedUpToReduceBy.minViaMinBy  (this.GetRecords())
 
-    [<Benchmark()>]
+    //[<Benchmark()>]
     member this.minByHandCrafted () = 
         InlinedUpToReduceBy.minByHandCrafted (fun x -> x.X) (this.GetRecords())
 
@@ -79,9 +87,9 @@ type AggBenchMark()   =
     //   (this.GetRecords()).MinBy(fun x -> x.X)
 
 
-    //[<Benchmark()>]
-    //member this.FullyInlinedMin () = 
-    //    FullyInlined.min (this.GetRecords())
+    [<Benchmark()>]
+    member this.FullyInlinedMin () = 
+        FullyInlined.min (this.GetRecords())
 
     //[<Benchmark()>]
     //member this.FullyInlinedMinBy () = 
@@ -96,9 +104,9 @@ type AggBenchMark()   =
     //    FullyInlinedWithoutChunking.minBy (fun x -> x.X) (this.GetRecords())   
 
         
-    //[<Benchmark()>]
-    //member this.NotAtAllInlinedMIn () = 
-    //    NotAtAllInlined.min (this.GetRecords())
+    [<Benchmark()>]
+    member this.NotAtAllInlinedMIn () = 
+        NotAtAllInlined.min (this.GetRecords())
 
     //[<Benchmark()>]
     //member this.NotAtAllInlinedMinBy () = 
